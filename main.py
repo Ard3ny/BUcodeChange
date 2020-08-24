@@ -1,12 +1,12 @@
 import paramiko
 
 
-host = "test.rebex.net"
+host = "10.60.215.15"
 port = 22
-username = "demo"
-password = "password"
+username = "wincor\filip.zverec.adm"
+password = "Wiab105kosice"
 
-command = "ls"
+command = "ll"
 
 ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
