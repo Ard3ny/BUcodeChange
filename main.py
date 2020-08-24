@@ -1,10 +1,12 @@
 import paramiko
 
-
-host = "10.60.215.15"
+print ('Zadaj hostname/IP servera')
+host = input()
+print ('Zadaj username')
+username = input()
+print ('Zadaj heslo')
+password = input()
 port = 22
-username = "wincor\filip.zverec.adm"
-password = "Wiab105kosice"
 
 command = "ll"
 
