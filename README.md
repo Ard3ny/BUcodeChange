@@ -10,3 +10,4 @@
 6. Vypise sucessfull a novy hostname a nove hosts 												#done ;mozno bude treba zmenit slicing na regular expresion
 7. Vypise IP adresu																				#done
 8. Rebootne																						#done
+9. Program pocka ak napisem N pri reboote az potom sa vypne
