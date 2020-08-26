@@ -8,5 +8,5 @@
 	-pomocou zadaneho BU kodu a current hostname name spravi sed hostname
 	-pomoocu zadaneho BU kodu a noveho Bu kodu sedne hosts
 6. Vypise sucessfull a novy hostname a nove hosts 												#done ;mozno bude treba zmenit slicing na regular expresion
-7. Vypise IP adresu
+7. Vypise IP adresu																				#done
 8. Rebootne

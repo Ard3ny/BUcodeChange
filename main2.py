@@ -90,12 +90,42 @@ for cat in catofhostname:
 
 
 
-#vytiahne hostname zo stringu s catom a vypise cisty hostname 
+
+#vytiahne hostname zo stringu s catom a vypise cisty hostname podla paternu pomocou RE
 pattern = re.compile(r'hostname\s\s.+?(?=\s)')
 matches = pattern.search(stringofhostnametobechanged)
 stringofmatches = str(matches)
 sliceofstringofmatches = stringofmatches[51:-2]
 print ('Hostname of the server is : ' + sliceofstringofmatches)
+
+
+
+#ip adresa servera
+ipofserver = ["""ip a"""]
+for ip in ipofserver:
+    channel.send(ip + "\n")
+    while not channel.recv_ready(): #Wait for the server to read and respond
+        time.sleep(0.1)
+    time.sleep(0.1) #wait enough for writing to (hopefully) be finished
+    ipaddress = channel.recv(9999) #read in
+    stringofipaddress = (ipaddress.decode('utf-8'))
+    #print(stringofipaddress)
+    time.sleep(0.1)
+
+#vytiahne ip adressu zo stringu podla paternu pomocou RE
+#inet 192.168.100.20/24 brd
+pattern2 = re.compile(r'inet.+?(?=brd)')
+matches2 = pattern2.search(stringofipaddress)
+stringofmatches2 = str(matches2)
+sliceofstringofmatches2 = stringofmatches2[46:]
+print ('IP of the server is : ' + sliceofstringofmatches2)
+
+
+
+
+
+
+
 
 
 
