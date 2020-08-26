@@ -9,4 +9,4 @@
 	-pomoocu zadaneho BU kodu a noveho Bu kodu sedne hosts
 6. Vypise sucessfull a novy hostname a nove hosts 												#done ;mozno bude treba zmenit slicing na regular expresion
 7. Vypise IP adresu																				#done
-8. Rebootne
+8. Rebootne																						#done
