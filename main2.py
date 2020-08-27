@@ -2,11 +2,6 @@ import paramiko
 import time
 import re
 
-
-#host = '192.168.100.20'
-#username = 'filip'
-#password = 'aaa'
-
 print ('IP address of the server: ')
 host = input()
 print ('Username: ')
@@ -25,7 +20,7 @@ channel.recv(9999)
 channel.send("\n")
 time.sleep(1)
 
-
+#cat of old hostname
 catofhostname = ["""cat /etc/hostname"""]
 for cat in catofhostname:
     channel.send(cat + "\n")
@@ -69,8 +64,8 @@ newbucode = input()
 
 
 
-#sed old BU code for new 
-sedofhostname = ["""sudo sed -i 's/%(oldbucode)s/%(newbucode)s/g' /etc/hostname""" % locals(), """aaa"""]
+#sed old BU code for new in hostname 
+sedofhostname = ["""sudo sed -i 's/%(oldbucode)s/%(newbucode)s/g' /etc/hostname""" % locals(), """%(password)s""" % locals()]
 for sed in sedofhostname:
     channel.send(sed + "\n")
     while not channel.recv_ready(): #Wait for the server to read and respond
@@ -80,6 +75,32 @@ for sed in sedofhostname:
     print(newhostname.decode('utf-8'))
     time.sleep(0.1)
 
+
+#sed old BU code for new in hosts
+sedofhosts = ["""sudo sed -i 's/%(oldbucode)s/%(newbucode)s/g' /etc/hosts""" % locals(), """%(password)s""" % locals()]
+for sed in sedofhosts:
+    channel.send(sed + "\n")
+    while not channel.recv_ready(): #Wait for the server to read and respond
+        time.sleep(0.1)
+    time.sleep(0.1) #wait enough for writing to (hopefully) be finished
+    newhosts = channel.recv(9999) #read in
+    print(newhostname.decode('utf-8'))
+    time.sleep(0.1)
+
+
+#cat of hosts
+catofhosts = ["""cat /etc/hosts"""]
+for cat in catofhosts:
+    channel.send(cat + "\n")
+    while not channel.recv_ready(): #Wait for the server to read and respond
+        time.sleep(0.1)
+    time.sleep(0.1) #wait enough for writing to (hopefully) be finished
+    catofthehostname = channel.recv(9999) #read in
+    stringofcatofthehostname = (catofthehostname.decode('utf-8'))
+    print(stringofcatofthehostname)       #raw output z cat hosts
+
+
+#cat of new hostname
 catofhostname = ["""cat /etc/hostname"""]
 for cat in catofhostname:
     channel.send(cat + "\n")
@@ -103,6 +124,19 @@ stringofmatches = str(matches)
 sliceofstringofmatches = stringofmatches[51:-2]
 print ('Hostname of the server is : ' + sliceofstringofmatches)
 
+catofhostname = ["""cat /etc/hostname"""]
+for cat in catofhostname:
+    channel.send(cat + "\n")
+    while not channel.recv_ready(): #Wait for the server to read and respond
+        time.sleep(0.1)
+    time.sleep(0.1) #wait enough for writing to (hopefully) be finished
+    hostnameToBeChanged = channel.recv(9999) #read in
+    #print(hostnameToBeChanged.decode('utf-8'))
+    stringofhostnametobechanged = (hostnameToBeChanged.decode('utf-8'))
+    #print(repr(stringofhostnametobechanged))   #raw verzia pre dalsie spracovanie
+    #print(hostnameToBeChanged.decode('utf-8'))  #prehladnejsia verzia s medzerami pre konzolu
+    time.sleep(0.1)
+
 
 
 #ip adresa servera
@@ -125,28 +159,31 @@ sliceofstringofmatches2 = stringofmatches2[46:]
 print ('IP of the server is : ' + sliceofstringofmatches2)
 
 
-#reboot systemu ak potvrdim yes 
-print('Do you want to reboot this machine? [Y/N]')
-rebootinput = input()
-if rebootinput == 'Y' or rebootinput == 'y' or rebootinput == 'yes':
-    reboot = ["""pwd"""]         #pwd na test
-    for rebooting in reboot:
-        channel.send(rebooting + "\n")
-        while not channel.recv_ready(): #Wait for the server to read and respond
+
+
+
+#reboot systemu ak potvrdim yes, ak nie tak loopback
+while True:
+    print('Do you want to reboot this machine? [Y/N]')
+    rebootinput = input()
+    if rebootinput == 'Y' or rebootinput == 'y' or rebootinput == 'yes':
+        reboot = ["""sudo reboot""", """%(password)s""" % locals()]         
+        for reb in reboot:
+            channel.send(reb + "\n")
+            while not channel.recv_ready(): #Wait for the server to read and respond
+                time.sleep(0.1)
+            time.sleep(0.1) #wait enough for writing to (hopefully) be finished
+            rebooting = channel.recv(9999) #read in
+            print(rebooting.decode('utf-8'))
             time.sleep(0.1)
-        time.sleep(0.1) #wait enough for writing to (hopefully) be finished
-        rebooting = channel.recv(9999) #read in
-        stringofrebooting = (rebooting.decode('utf-8'))
-        print(stringofrebooting)       #raw output z rebootu
-        time.sleep(0.1)
 
-elif rebootinput == 'N' or rebootinput == 'n' or rebootinput == 'no':
-    print ('Ok, system wont reboot, please do it on your own to apply all the changes')
-
-else:
-    print('System wont reboot, please input Y/N')
-
-
+    elif rebootinput == 'N' or rebootinput == 'n' or rebootinput == 'no':
+        print ('System wont reboot, please do it on your own to apply all the changes')
+        time.sleep(5)
+        break
+    else:
+        print('WRONG INPUT, Please type Y/N | y/n | yes/no')
+        time.sleep(2)
 
 #zavre shh channel
 channel.close()
