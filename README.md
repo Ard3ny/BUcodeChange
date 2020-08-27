@@ -11,24 +11,20 @@ Changes on the server
 	-pomoocu zadaneho BU kodu a noveho Bu kodu sedne hosts
 6. Vypise sucessfull a novy hostname a nove hosts 												#done ;mozno bude treba zmenit slicing na regular expresion
 7. Vypise IP adresu																				#done
-8. Rebootne																						#done
-9. Program pocka ak napisem N pri reboote az potom sa vypne
+8. prejde na druhu fazu cize vypne ssh kanal
 
-
-BUGS to fix
-
-1. Vymenit aaa heslo z testu																	#done
-2. reboot namiesto pwd 																			#done
-3. sed hosts pridat																				#done
-4. pridat vypis zo sed hosts																	#done
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Changes on the repo server
-1. Terminal ktore si vyziada heslo
-2. Podla BU change zadanej z prvej fazy kodu sa najde repo cd config/BUcode
-3. Podla noveho BUcode sa vykona sed 
-4. Premenovat subor oldBUrepo na newBUrepo
-5. Vypise status
+9. spyta sa ci chcem urobit zmeny na repo server
+10. ak nie ide dalej ak ano tak si vypyta heslo	
+	otvori ssh kanal novy																				#tu treba zmenit password v main2 na password repa
+11. Vezme stary hostname a z neho vytvori skratku														#done
+12. pomocou skratky urobi sed 																			#tu treba zmenit password v main2 na password repa
+13. premenuje file na novu skratku
+14. zavre ssh kanal repo servera
+15. otvori kanal normalneho servera a da reboot 
+
 
 
 
@@ -36,3 +32,10 @@ Changes on the repo server
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Changes on the ILO of the server
+
+
+
+
+
+
+

@@ -121,8 +121,8 @@ for cat in catofhostname:
 pattern = re.compile(r'hostname\s\s.+?(?=\s)')
 matches = pattern.search(stringofhostnametobechanged)
 stringofmatches = str(matches)
-sliceofstringofmatches = stringofmatches[51:-2]
-print ('Hostname of the server is : ' + sliceofstringofmatches)
+sliceofstringofmatches1 = stringofmatches[51:-2]
+print ('Hostname of the server is : ' + sliceofstringofmatches1)
 
 catofhostname = ["""cat /etc/hostname"""]
 for cat in catofhostname:
@@ -157,6 +157,34 @@ matches2 = pattern2.search(stringofipaddress)
 stringofmatches2 = str(matches2)
 sliceofstringofmatches2 = stringofmatches2[46:]
 print ('IP of the server is : ' + sliceofstringofmatches2)
+
+
+#old hostname z ktoreho potrebujem vytiahnut skratku kvoli repu
+#input retch907-es4003
+pattern3 = re.compile(r'.....+?(?=-)')
+matches3 = pattern3.search(sliceofstringofmatches)
+stringofmatches3 = str(matches3)
+sliceofstringofmatches3 = stringofmatches3[41:-2]
+#print ('Repo is : ' + sliceofstringofmatches3) #output ch907
+
+
+
+
+
+
+
+#sed old BU code for new in hostname 
+sedofhostname = ["""sudo sed -i 's/%(oldbucode)s/%(newbucode)s/g' /root/config/%(sliceofstringofmatches3)s""" % locals(), """%(passwordrepo)s""" % locals()]   
+for sed in sedofhostname:
+    channel.send(sed + "\n")
+    while not channel.recv_ready(): #Wait for the server to read and respond
+        time.sleep(0.1)
+    time.sleep(0.1) #wait enough for writing to (hopefully) be finished
+    newhostname = channel.recv(9999) #read in
+    print(newhostname.decode('utf-8'))
+    time.sleep(0.1)
+
+
 
 
 
