@@ -32,10 +32,8 @@ stringofmatches3 = str(matches3)
 sliceofstringofmatches3 = stringofmatches3[41:-2]
 #print ('Repo is : ' + sliceofstringofmatches3) #output ch907
 
-
-
 #sed old BU code for new in hostname 
-sedofhostname = ["""sudo sed -i 's/%(oldbucode)s/%(newbucode)s/g' /root/config/%(sliceofstringofmatches3)s""" % locals(), """%(password)s""" % locals()]   
+sedofhostname = ["""sudo sed -i 's/%(oldbucode)s/%(newbucode)s/g' /root/config/%(sliceofstringofmatches3)s""" % locals(), """%(passwordrepo)s""" % locals()]   
 for sed in sedofhostname:
     channel.send(sed + "\n")
     while not channel.recv_ready(): #Wait for the server to read and respond
@@ -44,9 +42,9 @@ for sed in sedofhostname:
     newhostname = channel.recv(9999) #read in
     print(newhostname.decode('utf-8'))
     time.sleep(0.1)
+     
 
 
 
-
- print ('toto znamena ze ide main3')
- time.sleep(10)
+print('toto znamena ze ide main3')
+time.sleep(10)
