@@ -30,7 +30,14 @@ Changes on the repo server
 	-pridat lines kde co zacina a konci																	#done
 	-specifikovat v akom tvare zadat 																	#done
 
+/////////////////////////////////////////
+Debugging na centOS
+1.Funguje vsetko az po reboot										
+2.Nefungujuci reboot v prvej casti kodu 				#fixed, bolo 																										treba aby pockal 0.1s na terminal odpoved
 
+
+3.repo server nesedne
+4. repo server nemovne
 
 
 

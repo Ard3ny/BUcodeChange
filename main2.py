@@ -11,8 +11,8 @@ username = input()
 print ('Pasword: ')
 password = input()
 
-# host = '192.168.100.20'
-# username = 'filip'
+# host = '192.168.100.8'
+# username = 'root'
 # password = 'aaa'
 
 client = paramiko.SSHClient()
@@ -168,15 +168,12 @@ while True:
     print('Do you want to reboot this machine? [Y/N]')
     rebootinput = input()
     if rebootinput == 'Y' or rebootinput == 'y' or rebootinput == 'yes':
-        reboot = ["""sudo reboot""", """%(password)s""" % locals()]         
+        reboot = ["""sudo /sbin/reboot""", """%(password)s""" % locals()]         
         for reb in reboot:
             channel.send(reb + "\n")
-            #while not channel.recv_ready(): #Wait for the server to read and respond
-                #time.sleep(0.1)
-                #time.sleep(0.1) #wait enough for writing to (hopefully) be finished
-            #rebooting = channel.recv(9999) #read in
-            #print(rebooting.decode('utf-8'))
-            #time.sleep(0.1)
+            while not channel.recv_ready(): #Wait for the server to read and respond
+                time.sleep(0.1)
+                time.sleep(0.1) #wait enough for writing to (hopefully) be finished
         print ('System is rebooting')
         break
     elif rebootinput == 'N' or rebootinput == 'n' or rebootinput == 'no':
@@ -204,6 +201,8 @@ while True:
 
         hostrepo = 'deika9010is021p'
         usernamerepo = 'cio_ad_s'
+        # hostrepo = '192.168.100.8'
+        # usernamerepo = 'root'
         print ('You will be logged in as ' + usernamerepo)
         print ('Please enter the password of repo server: ')
         passwordrepo = input()
