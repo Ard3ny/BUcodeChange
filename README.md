@@ -36,13 +36,36 @@ Debugging na centOS
 2.Nefungujuci reboot v prvej casti kodu 				#fixed, bolo 																										treba aby pockal 0.1s na terminal odpoved
 
 
-3.repo server nesedne
-4. repo server nemovne
+3.repo server nesedne									#fixed
+4. repo server nemovne									#fixed
 
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 Changes on the ILO of the server
+1. Spyta sa ci chcem zmenit ilo hostname
+2. pripoji sa na ssh servera udajmi ktore som uz zadal
+3. pushne config?
+	-ako?
+		-raw string changehostname.xml > zmenim MyserverName value > poslat do niecoho co ulozi xml subor 		#done	 											
+		-napadlo ma ze mozno cez touch and sed alebo pipou 														#done
+		-este aby uvodzovky zobral aj																			#done
+	-hostname musi byt v tvare xxxxx-es4003.wincor.ikea.com..... kde xxx bude novy repo nazov 					#done
+	-hponcfg -f changehostname.xml                                                                              #done
+4. reboot nefunguej inak vsetko ide                                                                             #done
+5. mozno IP server adres bude treba este pridat		
+
+
+subor changehostname.xml
+
+<RIBCL VERSION="2.0">
+  <LOGIN USER_LOGIN="admin" PASSWORD="Password">
+    <SERVER_INFO MODE="write">
+ <SERVER_NAME value ="MyServerName"/>
+    </SERVER_INFO>
+  </LOGIN>
+</RIBCL>
+
 
 
 
