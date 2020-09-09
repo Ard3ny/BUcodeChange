@@ -30,15 +30,15 @@ catofhostname = ["""cat /etc/hostname"""]
 for cat in catofhostname:
     channel.send(cat + "\n")
     while not channel.recv_ready(): #Wait for the server to read and respond
-        time.sleep(0.1)
-    time.sleep(0.1) #wait enough for writing to (hopefully) be finished
+        time.sleep(0.5)
+    time.sleep(0.5) #wait enough for writing to (hopefully) be finished
     hostnameToBeChanged = channel.recv(9999) #read in
-    #print(hostnameToBeChanged.decode('utf-8'))
-    stringofhostnametobechanged = (hostnameToBeChanged.decode('utf-8'))
+    time.sleep(0.5) 
+    
     #print(repr(stringofhostnametobechanged))   #raw verzia pre dalsie spracovanie
     #print(hostnameToBeChanged.decode('utf-8'))  #prehladnejsia verzia s medzerami pre konzolu
-    time.sleep(0.1)
-
+    stringofhostnametobechanged = (hostnameToBeChanged.decode('utf-8'))
+    time.sleep(0.5)
 
 #vytiahne hostname zo stringu s catom a vypise cisty hostname 
 pattern = re.compile(r'hostname\s\s.+?(?=\s)')
@@ -91,8 +91,8 @@ catofhosts = ["""cat /etc/hosts"""]
 for cat in catofhosts:
     channel.send(cat + "\n")
     while not channel.recv_ready(): #Wait for the server to read and respond
-        time.sleep(0.1)
-    time.sleep(0.1) #wait enough for writing to (hopefully) be finished
+        time.sleep(0.5)
+    time.sleep(0.5) #wait enough for writing to (hopefully) be finished
     catofthehostname = channel.recv(9999) #read in
     stringofcatofthehostname = (catofthehostname.decode('utf-8'))
     print ('---------------------------------------------------------------------')
@@ -105,8 +105,8 @@ catofhostname = ["""cat /etc/hostname"""]
 for cat in catofhostname:
     channel.send(cat + "\n")
     while not channel.recv_ready(): #Wait for the server to read and respond
-        time.sleep(0.1)
-    time.sleep(0.1) #wait enough for writing to (hopefully) be finished
+        time.sleep(0.5)
+    time.sleep(0.5) #wait enough for writing to (hopefully) be finished
     hostnameToBeChanged = channel.recv(9999) #read in
     #print(hostnameToBeChanged.decode('utf-8'))
     stringofhostnametobechanged = (hostnameToBeChanged.decode('utf-8'))
@@ -130,14 +130,14 @@ catofhostname = ["""cat /etc/hostname"""]
 for cat in catofhostname:
     channel.send(cat + "\n")
     while not channel.recv_ready(): #Wait for the server to read and respond
-        time.sleep(0.1)
+        time.sleep(0.5)
     time.sleep(0.1) #wait enough for writing to (hopefully) be finished
     hostnameToBeChanged = channel.recv(9999) #read in
     #print(hostnameToBeChanged.decode('utf-8'))
     stringofhostnametobechanged = (hostnameToBeChanged.decode('utf-8'))
     #print(repr(stringofhostnametobechanged))   #raw verzia pre dalsie spracovanie
     #print(hostnameToBeChanged.decode('utf-8'))  #prehladnejsia verzia s medzerami pre konzolu
-    time.sleep(0.1)
+    time.sleep(0.5)
 
 
 
@@ -146,12 +146,12 @@ ipofserver = ["""ip a"""]
 for ip in ipofserver:
     channel.send(ip + "\n")
     while not channel.recv_ready(): #Wait for the server to read and respond
-        time.sleep(0.1)
+        time.sleep(0.5)
     time.sleep(0.1) #wait enough for writing to (hopefully) be finished
     ipaddress = channel.recv(9999) #read in
     stringofipaddress = (ipaddress.decode('utf-8'))
     #print(stringofipaddress)       #raw IP output z ip a
-    time.sleep(0.1)
+    time.sleep(0.5)
 
 #vytiahne ip adressu zo stringu podla paternu pomocou RE
 pattern2 = re.compile(r'inet.+?(?=brd)')
@@ -174,20 +174,20 @@ while True:
     ilonameyesno = input()
     if ilonameyesno == 'Y' or ilonameyesno == 'y' or ilonameyesno == 'yes':
         makefileandfillit = ["""sudo su -""", """%(password)s""" % locals(),  """cd /tmp""", """echo "<RIBCL VERSION="2.0">
-  <LOGIN USER_LOGIN=\\"admin\\" PASSWORD=\\"Password\\">
-    <SERVER_INFO MODE=\\"write\\">
- <SERVER_NAME value =\\"%(newilohostname)s\\"/>
+  <LOGIN USER_LOGIN=\"admin\" PASSWORD=\"Password\">
+    <SERVER_INFO MODE=\"write\">
+ <SERVER_NAME value =\"%(newilohostname)s\"/>
     </SERVER_INFO>
   </LOGIN>
 </RIBCL>" > changehostname.xml""" % locals(), """hponcfg -f changehostname.xml"""]
         for insert in makefileandfillit:
             channel.send(insert + "\n")
             while not channel.recv_ready(): #Wait for the server to read and respond
-                time.sleep(0.1)
+                time.sleep(0.5)
             time.sleep(0.1) #wait enough for writing to (hopefully) be finished
             newilohostname = channel.recv(9999) #read in
             print(newilohostname.decode('utf-8'))
-            time.sleep(0.1)
+            time.sleep(0.5)
         print ('---------------------------------------------------------------------')
         print ('ILO of the server was successfully changed')
         print ('---------------------------------------------------------------------')
@@ -214,7 +214,7 @@ while True:
         for reb in reboot:
             channel.send(reb + "\n")
             while not channel.recv_ready(): #Wait for the server to read and respond
-                time.sleep(0.1)
+                time.sleep(0.5)
         print ('System is rebooting')
         break
     elif rebootinput == 'N' or rebootinput == 'n' or rebootinput == 'no':
@@ -243,7 +243,7 @@ while True:
     if repochanges == 'Y' or repochanges == 'y' or repochanges == 'yes':
 
 
-        hostrepo = 'deika9010is021p'
+        hostrepo = ''
         usernamerepo = ''
         passwordrepo = ''
         # hostrepo = '192.168.100.8'
@@ -282,11 +282,11 @@ while True:
         for sed in sedofhostname:
             channel.send(sed + "\n")
             while not channel.recv_ready(): #Wait for the server to read and respond
-                time.sleep(0.1)
+                time.sleep(0.5)
             time.sleep(0.1) #wait enough for writing to (hopefully) be finished
             newhostname = channel.recv(9999) #read in
             print(newhostname.decode('utf-8'))
-            time.sleep(0.1)
+            time.sleep(0.5)
 
 
         #zavre shh channel
