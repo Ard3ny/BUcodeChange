@@ -11,8 +11,8 @@ host = input()
 # password = input()
 
 #host = '192.168.100.8'
-username = ''
-password = ''
+username = 'cio_ad_s'
+password = 'nohpCCM2016,'
 
 client = paramiko.SSHClient()
 client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -243,9 +243,9 @@ while True:
     if repochanges == 'Y' or repochanges == 'y' or repochanges == 'yes':
 
 
-        hostrepo = ''
-        usernamerepo = ''
-        passwordrepo = ''
+        hostrepo = 'deika9010is021p'
+        usernamerepo = 'cio_ad_s'
+        passwordrepo = 'TsimbCIO5!'
         # hostrepo = '192.168.100.8'
         # usernamerepo = 'root'
         print ('You will be logged in as ' + usernamerepo)
